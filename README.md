@@ -23,5 +23,6 @@
 ---
 
 Members
-Alazab Alaa
+-Alazab Alaa
+-Kalimashev bulat
 
