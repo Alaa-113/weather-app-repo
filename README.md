@@ -17,10 +17,11 @@
 ## Features
 
 - Search weather by city  
-- Show current temperature, humidity, wind, and conditions  
-- Optional: 3–5 day forecast  
+- Show current temperature, humidity, wind, and conditions   
 - Responsive design  
 
 ---
 
-## Project Structure
+Members
+Alazab Alaa
+
