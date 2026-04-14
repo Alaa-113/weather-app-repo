@@ -1,0 +1,89 @@
+<!-- <p>dashboard works!</p> -->
+<div class="row">
+  <div class="col-md-12">
+    <h2>🌡️ Weather Dashboard</h2>
+    
+    <div class="card mb-3">
+      <div class="card-body">
+        <div class="input-group mb-3">
+          <input 
+            type="text" 
+            class="form-control" 
+            placeholder="Enter city name (e.g., Almaty, London, New York)"
+            [(ngModel)]="searchCity"
+            (keyup.enter)="searchWeather()">
+          <button class="btn btn-primary" (click)="searchWeather()">🔍 Search</button>
+          <button class="btn btn-secondary" (click)="clearSearch()">🗑️ Clear</button>
+        </div>
+
+        <button class="btn btn-info w-100" (click)="goToFavorites()">
+          ⭐ View My Favorites
+        </button>
+      </div>
+    </div>
+
+    @if (errorMessage) {
+      <div class="alert alert-danger">❌ {{ errorMessage }}</div>
+    }
+
+    @if (successMessage) {
+      <div class="alert alert-success">✅ {{ successMessage }}</div>
+    }
+
+    @if (loading) {
+      <div class="text-center">
+        <div class="spinner-border text-primary"></div>
+        <p>Loading weather data...</p>
+      </div>
+    }
+
+    @if (currentWeather && !loading) {
+      <div class="card mb-4">
+        <div class="card-header bg-info text-white">
+          <h3>{{ currentWeather.city }}, {{ currentWeather.country }}</h3>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6 text-center">
+              <h1>{{ currentWeather.temperature }}°C</h1>
+              <p>Feels like: {{ currentWeather.feels_like }}°C</p>
+              <p>Condition: {{ currentWeather.condition }}</p>
+            </div>
+            <div class="col-md-6">
+              <p>💧 Humidity: {{ currentWeather.humidity }}%</p>
+              <p>💨 Wind: {{ currentWeather.wind_speed }} km/h</p>
+              <p>🌡️ Pressure: {{ currentWeather.pressure }} hPa</p>
+            </div>
+          </div>
+          
+          <button class="btn btn-success w-100 mt-3" (click)="addToFavorites()">
+            ⭐ Add to Favorites
+          </button>
+        </div>
+      </div>
+
+      @if (forecastList.length > 0) {
+        <h4>📅 5-Day Forecast</h4>
+        <div class="row">
+          @for (day of forecastList; track day.date) {
+            <div class="col-md-2 mb-3">
+              <div class="card text-center">
+                <div class="card-body">
+                  <p><strong>{{ day.date | date:'EEE' }}</strong></p>
+                  <p>🌡️ {{ day.temp }}°C</p>
+                  <p>{{ day.condition }}</p>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      }
+    }
+
+    @if (!currentWeather && !loading && !errorMessage) {
+      <div class="alert alert-info">
+        🔍 Search for a city to see weather information
+      </div>
+    }
+  </div>
+</div>

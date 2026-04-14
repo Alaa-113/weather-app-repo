@@ -1,0 +1,24 @@
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" *ngIf="isLoggedIn()">
+  <div class="container">
+    <a class="navbar-brand" routerLink="/dashboard">🌤️ WeatherApp</a>
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/favorites" routerLinkActive="active">Favorites</a>
+        </li>
+        <li class="nav-item">
+          <button class="btn btn-danger btn-sm ms-3" (click)="logout()">Logout</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<div class="container mt-4">
+  <router-outlet></router-outlet>
+</div>
