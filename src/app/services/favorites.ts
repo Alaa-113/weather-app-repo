@@ -17,7 +17,7 @@ export class FavoritesService {
   constructor(private http: HttpClient) {}
 
   add(city: string, notes?: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/favorites/`, { city, notes: notes || '' });
+    return this.http.post(`${this.apiUrl}/favorites/`, { city_name: city, notes: notes || '' });
   }
 
   getFavorites(): Observable<any> {

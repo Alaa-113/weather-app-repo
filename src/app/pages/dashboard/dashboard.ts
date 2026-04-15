@@ -37,18 +37,9 @@ export class Dashboard implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log('ngOnInit called - Dashboard loaded');
-    this.route.queryParams.subscribe(params => {
-      if (params['city']) {
-        this.searchCity = params['city'];
-        this.searchWeather();
-      }
-    });
-    
-    if (!this.searchCity) {
-      this.searchCity = 'London';
-      this.searchWeather();
-    }
+    const cityParam = this.route.snapshot.queryParamMap.get('city');
+    this.searchCity = cityParam && cityParam.trim() ? cityParam : 'London';
+    this.searchWeather();
   }
 
   searchWeather() {
