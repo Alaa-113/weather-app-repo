@@ -5,57 +5,67 @@
     Back to Dashboard
   </button>
 
-  <div *ngIf="loading" class="alert alert-info">
-    Loading favorites...
-  </div>
+  @if (loading) {
+    <div class="alert alert-info">
+      Loading favorites...
+    </div>
+  }
 
-  <div *ngIf="errorMessage" class="alert alert-danger">
-    {{ errorMessage }}
-  </div>
+  @if (errorMessage) {
+    <div class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+  }
 
-  <div *ngIf="!loading && favorites.length === 0" class="alert alert-warning">
-    No favorites yet. Add cities from the dashboard!
-  </div>
+  @if (!loading && favorites.length === 0) {
+    <div class="alert alert-warning">
+      No favorites yet. Add cities from the dashboard!
+    </div>
+  }
 
-  <div class="row" *ngIf="favorites.length > 0">
-    <div class="col-md-4 mb-3" *ngFor="let favorite of favorites">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">{{ favorite.city_name }}</h5>
-          
-          <div *ngIf="editingNote[favorite.id] !== undefined">
-            <textarea 
-              class="form-control mb-2" 
-              [(ngModel)]="editingNote[favorite.id]"
-              rows="2"
-            ></textarea>
-            <button class="btn btn-sm btn-success" (click)="updateNote(favorite.id)">
-              Save
-            </button>
-            <button class="btn btn-sm btn-secondary" (click)="cancelEdit(favorite.id)">
-              Cancel
-            </button>
-          </div>
-          
-          <div *ngIf="editingNote[favorite.id] === undefined">
-            <p class="card-text">
-              <strong>Notes:</strong> {{ favorite.notes || 'No notes' }}
-            </p>
-            <button class="btn btn-sm btn-info" (click)="startEdit(favorite.id, favorite.notes || '')">
-              Edit Note
-            </button>
-          </div>
-          
-          <div class="mt-2">
-            <button class="btn btn-sm btn-primary" (click)="viewWeather(favorite.city_name)">
-              View Weather
-            </button>
-            <button class="btn btn-sm btn-danger ms-2" (click)="deleteFavorite(favorite.id, favorite.city_name)">
-              Remove
-            </button>
+  @if (favorites.length > 0) {
+    <div class="row">
+      @for (favorite of favorites; track favorite.id) {
+        <div class="col-md-4 mb-3">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">{{ favorite.city_name }}</h5>
+              
+              @if (editingNote[favorite.id] !== undefined) {
+                <textarea 
+                  class="form-control mb-2" 
+                  [(ngModel)]="editingNote[favorite.id]"
+                  rows="2"
+                ></textarea>
+                <button class="btn btn-sm btn-success" (click)="updateNote(favorite.id)">
+                  Save
+                </button>
+                <button class="btn btn-sm btn-secondary" (click)="cancelEdit(favorite.id)">
+                  Cancel
+                </button>
+              }
+              
+              @if (editingNote[favorite.id] === undefined) {
+                <p class="card-text">
+                  <strong>Notes:</strong> {{ favorite.notes || 'No notes' }}
+                </p>
+                <button class="btn btn-sm btn-info" (click)="startEdit(favorite.id, favorite.notes || '')">
+                  Edit Note
+                </button>
+              }
+              
+              <div class="mt-2">
+                <button class="btn btn-sm btn-primary" (click)="viewWeather(favorite.city_name)">
+                  View Weather
+                </button>
+                <button class="btn btn-sm btn-danger ms-2" (click)="deleteFavorite(favorite.id, favorite.city_name)">
+                  Remove
+                </button>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      }
     </div>
-  </div>
+  }
 </div>
