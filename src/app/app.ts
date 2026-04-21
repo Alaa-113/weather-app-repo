@@ -1,17 +1,3 @@
-// import { Component, signal } from '@angular/core';
-// import { RouterOutlet } from '@angular/router';
-
-// @Component({
-//   selector: 'app-root',
-//   imports: [RouterOutlet],
-//   templateUrl: './app.html',
-//   styleUrl: './app.css'
-// })
-// export class App {
-//   protected readonly title = signal('weather-app');
-// }
-
-
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet, RouterLink, RouterLinkActive, Router } from '@angular/router';
@@ -38,7 +24,3 @@ export class App {
     this.router.navigate(['/login']);
   }
 }
-
-
-
-

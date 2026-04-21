@@ -1,12 +1,3 @@
-// import { Component } from '@angular/core';
-
-// @Component({
-//   selector: 'app-dashboard',
-//   imports: [],
-//   templateUrl: './dashboard.html',
-//   styleUrl: './dashboard.css',
-// })
-// export class Dashboard {}
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';

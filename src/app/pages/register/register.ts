@@ -5,15 +5,16 @@ import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-register',
   standalone: true,
   imports: [CommonModule, FormsModule, RouterLink],
-  templateUrl: './login.html',
-  styleUrls: ['./login.css']
+  templateUrl: './register.html',
+  styleUrls: ['./register.css']
 })
-export class Login {
+export class Register {
   username = '';
   password = '';
+  passwordConfirm = '';
   error = '';
   loading = false;
 
@@ -24,18 +25,26 @@ export class Login {
       this.error = 'Enter username and password';
       return;
     }
+    if (this.password.length < 6) {
+      this.error = 'Password must be at least 6 characters';
+      return;
+    }
+    if (this.password !== this.passwordConfirm) {
+      this.error = 'Passwords do not match';
+      return;
+    }
 
     this.loading = true;
     this.error = '';
 
-    this.auth.login(this.username, this.password).subscribe({
-      next: (res: any) => {
+    this.auth.register(this.username, this.password).subscribe({
+      next: () => {
         this.loading = false;
         this.router.navigate(['/dashboard']);
       },
       error: (err) => {
         this.loading = false;
-        this.error = 'Login failed. Check username/password';
+        this.error = err?.error?.error || 'Registration failed';
       }
     });
   }

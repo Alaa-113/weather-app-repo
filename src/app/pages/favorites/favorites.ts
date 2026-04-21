@@ -1,12 +1,3 @@
-// import { Component } from '@angular/core';
-
-// @Component({
-//   selector: 'app-favorites',
-//   imports: [],
-//   templateUrl: './favorites.html',
-//   styleUrl: './favorites.css',
-// })
-// export class Favorites {}
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
