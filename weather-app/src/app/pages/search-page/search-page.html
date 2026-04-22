@@ -1,0 +1,41 @@
+<div class="page-container">
+  <div class="top-bar">
+    <button class="top-btn" (click)="goToFavorites()">Favorites</button>
+    <button class="top-btn" (click)="logout()">Logout</button>
+  </div>
+
+  <div class="search-section">
+    <div class="app-title">WeatherApp</div>
+    
+   @if (errorMessage) {
+  <div class="error-message">{{ errorMessage }}</div>
+}
+    
+    <div class="search-container">
+      <input 
+        type="text" 
+        [(ngModel)]="searchQuery"
+        (keyup.enter)="search()"
+        placeholder="Search for a city..."
+        class="search-input"
+      >
+      <button (click)="search()" class="search-btn" [disabled]="loading">
+        {{ loading ? 'Searching...' : 'Search' }}
+      </button>
+    </div>
+  </div>
+
+  @if (recentCities.length > 0) {
+    <div class="recent-section">
+      <h3>Recent Cities</h3>
+      <div class="recent-list">
+        @for (city of recentCities; track city) {
+          <div class="recent-chip">
+            <span (click)="selectCity(city)">{{ city }}</span>
+            <button class="remove-btn" (click)="removeCity(city)">x</button>
+          </div>
+        }
+      </div>
+    </div>
+  }
+</div>

@@ -1,0 +1,83 @@
+<div class="dashboard-container" [style.backgroundImage]="backgroundImage">
+  <div class="top-bar">
+    <button class="top-btn" (click)="goToSearch()">Search</button>
+    <button class="top-btn" (click)="goToFavorites()">Favorites</button>
+    <button class="top-btn" (click)="logout()">Logout</button>
+  </div>
+
+  @if (loading) {
+    <div class="loading">Loading weather data...</div>
+  }
+
+  @if (errorMessage) {
+    <div class="error-message">{{ errorMessage }}</div>
+  }
+<div class="dashboard-container" [style.backgroundImage]="backgroundImage || 'url(https://images.pexels.com/photos/209831/pexels-photo-209831.jpeg?w=1920)'"></div>
+  @if (!loading && weatherData) {
+    <div class="weather-content">
+      <h1>{{ weatherData.name }}, {{ weatherData.sys?.country }}</h1>
+
+      
+      <div class="main-temp">
+        <span class="temp">{{ weatherData.main?.temp | number:'1.0-0' }}°C</span>
+      </div>
+      
+      <div class="feels-like">Feels like: {{ weatherData.main?.feels_like | number:'1.0-0' }}°C</div>
+      <div class="condition">Condition: {{ weatherData.weather?.[0]?.description }}</div>
+      <div class="min-max">Min: {{ weatherData.main?.temp_min | number:'1.0-0' }}°C / Max: {{ weatherData.main?.temp_max | number:'1.0-0' }}°C</div>
+      
+      <div class="details-grid">
+          <div class="detail-card">Sunrise: {{ weatherData.sunrise || 'N/A' }}</div>
+  <div class="detail-card">Sunset: {{ weatherData.sunset || 'N/A' }}</div>
+  <div class="detail-card">Humidity: {{ weatherData.main?.humidity }}%</div>
+  <div class="detail-card">Wind: {{ weatherData.wind?.speed }} km/h</div>
+  <div class="detail-card">Pressure: {{ weatherData.main?.pressure }} hPa</div>
+  <div class="detail-card">Visibility: {{ (weatherData.visibility || 0) / 1000 }} km</div>
+  <div class="detail-card">Clouds: {{ weatherData.clouds?.all }}%</div>
+ 
+
+   
+ 
+    <div class="detail-card">Precipitation: {{ weatherData.precipitation || '0' }} mm</div>
+  
+ 
+</div>
+
+      <button class="favorite-btn" (click)="addToFavorites()">Add to Favorites</button>
+
+     @if (hourlyForecast.length > 0) {
+  <div class="forecast-section">
+    <h3>24-Hour Forecast</h3>
+    <div class="scroll-container">
+      <div class="hourly-list">
+        @for (hour of hourlyForecast; track hour.time) {
+          <div class="hourly-card">
+            <div class="hourly-time">{{ hour.time }}</div>
+            <div class="hourly-temp">{{ hour.temp }}°C</div>
+            <div class="hourly-condition">{{ hour.condition }}</div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+}
+
+      @if (forecast.length > 0) {
+        <div class="forecast-section">
+          <h3>10-Day Forecast</h3>
+          <div class="scroll-container">
+            <div class="forecast-list">
+              @for (day of forecast; track day.date) {
+                <div class="forecast-card">
+                  <div class="forecast-date">{{ day.date }}</div>
+                  <div class="forecast-temp">{{ day.temp }}°C</div>
+                  <div class="forecast-condition">{{ day.condition }}</div>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>
