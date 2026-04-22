@@ -1,0 +1,32 @@
+<div class="login-page">
+  <div class="login-card">
+    <div class="login-header">
+      <h2>Welcome Back</h2>
+      <p>Login to WeatherApp</p>
+    </div>
+
+    @if (showRegisterSuggestion) {
+      <div class="error-red">You don't have an account. Register first.</div>
+    }
+
+    <form (ngSubmit)="submit()">
+      <div class="input-field">
+        <label>Username</label>
+        <input type="text" [(ngModel)]="username" name="username" required>
+      </div>
+
+      <div class="input-field">
+        <label>Password</label>
+        <input type="password" [(ngModel)]="password" name="password" required>
+      </div>
+
+      <button type="submit" [disabled]="loading">
+        {{ loading ? 'Logging in...' : 'Login' }}
+      </button>
+    </form>
+
+    <div class="register-link">
+      Don't have an account? <a routerLink="/register">Register here</a>
+    </div>
+  </div>
+</div>

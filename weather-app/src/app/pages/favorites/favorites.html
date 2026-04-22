@@ -1,0 +1,69 @@
+<div class="favorites-container">
+  <div class="background"></div>
+  
+  <div class="top-bar">
+    <button class="top-btn" (click)="goToDashboard()">Dashboard</button>
+    <button class="top-btn" (click)="goToSearch()">Search</button>
+    <button class="top-btn" (click)="logout()">Logout</button>
+  </div>
+
+  <div class="favorites-content">
+    <h1>My Favorite Cities</h1>
+
+    @if (favorites.length === 0) {
+      <div class="empty-message">
+        <p>No favorites yet</p>
+        <p>Search for a city and click Add to Favorites</p>
+      </div>
+    }
+
+    @if (favorites.length > 0) {
+      <div class="favorites-list">
+        @for (favorite of favorites; track favorite.name) {
+          <div class="favorite-card">
+            <div class="favorite-header">
+              <span class="city-name" (click)="viewCity(favorite.name)">
+                {{ favorite.name }}
+              </span>
+              <button class="remove-btn" (click)="removeFavorite(favorite.name)">
+                ×
+              </button>
+            </div>
+            
+            <div class="favorite-note-section">
+              @if (editingNote[favorite.name] !== undefined) {
+                <div>
+                  <textarea 
+                    class="note-input" 
+                    [(ngModel)]="editingNote[favorite.name]"
+                    rows="2"
+                    placeholder="Add a note about this city..."
+                  ></textarea>
+                  <div class="note-actions">
+                    <button class="note-btn save" (click)="updateNote(favorite.name)">Save</button>
+                    <button class="note-btn cancel" (click)="cancelEdit(favorite.name)">Cancel</button>
+                  </div>
+                </div>
+              }
+              
+              @if (editingNote[favorite.name] === undefined) {
+                <div>
+                  <p class="note-text">
+                    {{ favorite.note || 'No notes added' }}
+                  </p>
+                  <button class="edit-note-btn" (click)="startEdit(favorite.name, favorite.note || '')">
+                    {{ favorite.note ? 'Edit Note' : 'Add Note' }}
+                  </button>
+                </div>
+              }
+            </div>
+            
+            <button class="weather-btn" (click)="viewCity(favorite.name)">
+              View Weather
+            </button>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>
