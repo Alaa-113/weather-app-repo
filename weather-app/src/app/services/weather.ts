@@ -13,7 +13,7 @@ export class WeatherService {
   private getHeaders(): HttpHeaders {
     const token = localStorage.getItem('token');
     return new HttpHeaders({
-      'Authorization': `Token ${token}`
+      'Authorization': `Bearer ${token}`
     });
   }
 
@@ -35,7 +35,7 @@ addFavorite(city: string, notes: string): Observable<any> {
   
   return this.http.post(`${this.apiUrl}/favorites/`, { city, notes }, { 
     headers: new HttpHeaders({
-      'Authorization': `Token ${token}`
+      'Authorization': `Bearer ${token}`
     })
   });
 }

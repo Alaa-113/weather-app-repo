@@ -39,7 +39,7 @@ export class Login {
       next: (res: any) => {
         this.loading = false;
         this.cdr.detectChanges();
-        if (res && res.token) {
+        if (res && res.access) {
           this.router.navigate(['/search']);
         }
       },

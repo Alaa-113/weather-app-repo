@@ -12,8 +12,11 @@ export class AuthService {
  login(username: string, password: string) {
   return this.http.post(`${this.apiUrl}/login/`, { username, password }).pipe(
     tap((res: any) => {
-      if (res.token) {
-        localStorage.setItem('token', res.token);
+      if (res.access) {
+        localStorage.setItem('token', res.access);
+        if (res.refresh) {
+          localStorage.setItem('refresh', res.refresh);
+        }
       }
     })
   );
@@ -29,6 +32,7 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem(this.tokenKey);
+    localStorage.removeItem('refresh');
   }
 
   isLoggedIn() {
