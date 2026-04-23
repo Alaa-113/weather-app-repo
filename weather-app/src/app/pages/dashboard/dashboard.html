@@ -12,35 +12,23 @@
   @if (errorMessage) {
     <div class="error-message">{{ errorMessage }}</div>
   }
-<div class="dashboard-container" [style.backgroundImage]="backgroundImage || 'url(https://images.pexels.com/photos/209831/pexels-photo-209831.jpeg?w=1920)'"></div>
+
   @if (!loading && weatherData) {
     <div class="weather-content">
-      <h1>{{ weatherData.name }}, {{ weatherData.sys?.country }}</h1>
+      <h1>{{ weatherData.city }}, {{ weatherData.country }}</h1>
 
-      
+
       <div class="main-temp">
-        <span class="temp">{{ weatherData.main?.temp | number:'1.0-0' }}°C</span>
+        <span class="temp">{{ weatherData.temperature | number:'1.0-0' }}°C</span>
       </div>
-      
-      <div class="feels-like">Feels like: {{ weatherData.main?.feels_like | number:'1.0-0' }}°C</div>
-      <div class="condition">Condition: {{ weatherData.weather?.[0]?.description }}</div>
-      <div class="min-max">Min: {{ weatherData.main?.temp_min | number:'1.0-0' }}°C / Max: {{ weatherData.main?.temp_max | number:'1.0-0' }}°C</div>
-      
-      <div class="details-grid">
-          <div class="detail-card">Sunrise: {{ weatherData.sunrise || 'N/A' }}</div>
-  <div class="detail-card">Sunset: {{ weatherData.sunset || 'N/A' }}</div>
-  <div class="detail-card">Humidity: {{ weatherData.main?.humidity }}%</div>
-  <div class="detail-card">Wind: {{ weatherData.wind?.speed }} km/h</div>
-  <div class="detail-card">Pressure: {{ weatherData.main?.pressure }} hPa</div>
-  <div class="detail-card">Visibility: {{ (weatherData.visibility || 0) / 1000 }} km</div>
-  <div class="detail-card">Clouds: {{ weatherData.clouds?.all }}%</div>
- 
 
-   
- 
-    <div class="detail-card">Precipitation: {{ weatherData.precipitation || '0' }} mm</div>
-  
- 
+      <div class="feels-like">Feels like: {{ weatherData.feels_like | number:'1.0-0' }}°C</div>
+      <div class="condition">Condition: {{ weatherData.condition }}</div>
+
+      <div class="details-grid">
+  <div class="detail-card">Humidity: {{ weatherData.humidity }}%</div>
+  <div class="detail-card">Wind: {{ weatherData.wind_speed }} km/h</div>
+  <div class="detail-card">Pressure: {{ weatherData.pressure }} hPa</div>
 </div>
 
       <button class="favorite-btn" (click)="addToFavorites()">Add to Favorites</button>

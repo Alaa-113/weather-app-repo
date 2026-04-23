@@ -62,7 +62,7 @@ export class Dashboard implements OnInit {
     this.weather.getWeather(encodedCity).subscribe({
       next: (data: any) => {
         this.weatherData = data;
-        this.updateBackground(data.weather[0]?.main || 'Clear');
+        this.updateBackground(data.condition || 'Clear');
         this.checkIfFavorite();
         this.loading = false;
         this.cdr.detectChanges();
@@ -91,68 +91,15 @@ export class Dashboard implements OnInit {
 
 
   processForecastData(data: any) {
-    if (data.list) {
-      const now = new Date();
-      const currentHour = now.getHours();
-      
-      this.hourlyForecast = data.list
-        .filter((item: any) => {
-          const itemDate = new Date(item.dt_txt);
-          const itemHour = itemDate.getHours();
-          
-          if (itemDate.toDateString() === now.toDateString()) {
-            return itemHour >= currentHour;
-          }
-          return itemDate > now;
-        })
-        .slice(0, 8)
-        .map((item: any) => {
-          const itemDate = new Date(item.dt_txt);
-          let timeString = itemDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-          
-          if (itemDate.toDateString() === now.toDateString() && itemDate.getHours() === currentHour) {
-            timeString = 'Now';
-          }
-          
-          return {
-            time: timeString,
-            temp: Math.round(item.main.temp),
-            condition: item.weather[0].description,
-            icon: item.weather[0].icon
-          };
-        });
-      
-      const realForecast = data.list
-        .filter((item: any, index: number) => index % 8 === 0)
-        .slice(0, 5)
-        .map((item: any) => ({
-          date: new Date(item.dt_txt).toLocaleDateString([], { weekday: 'short', month: 'short', day: 'numeric' }),
-          temp: Math.round(item.main.temp),
-          temp_min: Math.round(item.main.temp_min),
-          temp_max: Math.round(item.main.temp_max),
-          condition: item.weather[0].description,
-          icon: item.weather[0].icon
-        }));
-      
-      this.forecast = [...realForecast];
-      
-      for (let i = 0; i < 5; i++) {
-        const lastDay = this.forecast[this.forecast.length - 1];
-        const variation = Math.floor(Math.random() * 5) - 2;
-        
-        const nextDate = new Date();
-        nextDate.setDate(nextDate.getDate() + 5 + i);
-        
-        this.forecast.push({
-          date: nextDate.toLocaleDateString([], { weekday: 'short', month: 'short', day: 'numeric' }),
-          temp: lastDay.temp + variation,
-          temp_min: lastDay.temp_min + variation,
-          temp_max: lastDay.temp_max + variation,
-          condition: lastDay.condition,
-          icon: lastDay.icon
-        });
-      }
-    }
+    if (!data?.list) return;
+
+    this.hourlyForecast = [];
+
+    this.forecast = data.list.map((item: any) => ({
+      date: new Date(item.date).toLocaleDateString([], { weekday: 'short', month: 'short', day: 'numeric' }),
+      temp: Math.round(item.temp),
+      condition: item.condition,
+    }));
   }
 
 
